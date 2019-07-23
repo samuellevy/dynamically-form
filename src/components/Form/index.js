@@ -5,17 +5,17 @@ import "./styles.css";
 export default class Form extends Component {
   state = {
     buyer: {
-      name: "a",
+      name: "",
       email: ""
     },
-    users: ["samuel"]
+    users: [{ name: "", email: "" }]
   };
   componentDidMount() {
     console.log(this.state.users);
   }
 
   addUser = e => {
-    this.setState({ users: [...this.state.users, ""] });
+    this.setState({ users: [...this.state.users, { name: "", email: "" }] });
   };
 
   handleBuyerChange = e => {
@@ -24,7 +24,8 @@ export default class Form extends Component {
 
   handleChange = (e, index) => {
     const users = this.state.users;
-    users[index] = e.target.value;
+    users[index][e.target.name] = e.target.value;
+
     this.setState({ users: users });
   };
 
@@ -44,7 +45,10 @@ export default class Form extends Component {
           {this.state.users.map((user, index) => (
             <div className={"block"} key={index}>
               <label>Nome</label>
-              <input value={user} onChange={e => this.handleChange(e, index)} />
+              <input name={"name"} value={user.name} onChange={e => this.handleChange(e, index)} />
+
+              <label>Email</label>
+              <input name={"email"} value={user.email} onChange={e => this.handleChange(e, index)} />
             </div>
           ))}
 
